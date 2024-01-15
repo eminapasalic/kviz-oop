@@ -1,0 +1,106 @@
+#include <iostream>
+using namespace std;
+
+
+void idinaXY(int x, int y); 
+
+
+//INFORMACIJE, STAVKA 1 MENIJA
+void info()	
+{
+	idinaXY(56,4);	//ide na koordinate (x,y)
+		cout<<"Instrukcije"<<endl;
+	idinaXY(50,5);	
+		cout<<"Pretisnite Enter za Main Menu"<<endl;
+	
+		idinaXY(38,6);	
+		cout<<"    ______________________________________________________"<<endl;
+		idinaXY(38,7);
+		cout<<"    |                             	                     |."<<endl;
+		idinaXY(38,8);
+		cout<<"    |                                                     |."<<endl;
+		idinaXY(38,9);
+		cout<<"    | Odaberite==>                                        |."<<endl;
+		idinaXY(38,10);
+		cout<<"    | Pritisnite jedan od ova 4 odgovora--> (a,b,c,d)     |."<<endl;
+		idinaXY(38,11);
+		cout<<"    | Ako pritisnete nesto drugo smatrat ce se pogresnim  |."<<endl;
+		idinaXY(38,12); 
+		cout<<"    | odgvorom.                                           |."<<endl;
+		idinaXY(38,13);
+		cout<<"    |                            	   	                 |."<<endl;
+		idinaXY(38,14);
+		cout<<"    | Preskocite==>                                       |."<<endl;
+		idinaXY(38,15);
+		cout<<"    | Pritisnite Enter da preskocite pitanje              |."<<endl;
+		idinaXY(38,16);
+		cout<<"    |                            	                     |."<<endl;
+		idinaXY(38,17); 
+		cout<<"    | Poeni==>                                            |."<<endl;
+		idinaXY(38,18); 
+		cout<<"    | 10 poena ce se dodijeliti za svaki                  |."<<endl;
+		idinaXY(38,19);
+		cout<<"    | tacan odgovor.                                      |."<<endl;
+		idinaXY(38,20);
+		cout<<"    |                                                     |."<<endl;
+		idinaXY(38,21);
+		cout<<"    | Vrijeme==>                                          |."<<endl;
+		idinaXY(38,22);
+		cout<<"    | Timu ce se dodijeliti 60 sekundi za                 |."<<endl;
+		idinaXY(38,23);
+		cout<<"    | svako pitanje.                                      |."<<endl;
+		idinaXY(38,24);
+		cout<<"    |                              	                     |."<<endl;
+		idinaXY(38,25); 
+		cout<<"    | Identifikacija==>                                   |."<<endl;
+		idinaXY(38,26);
+		cout<<"    | Unesite broj indeksa i ime za rezultate             |."<<endl;
+		idinaXY(38,27);
+		cout<<"    |                          	                         |."<<endl;
+		idinaXY(38,28);
+		cout<<"    |   __________________________________________________"<<endl;
+
+}
+
+
+
+
+//PRIKAZ MENIJA
+void glavniprozor()		
+{
+	doo :
+	system("CLS");		
+	idinaXY(50,20);
+	cout<<" >>";
+	idinaXY(74,20);
+	cout<<" >>";
+	idinaXY(54,20);
+	cout<<"Pritisnite Enter da nastavite";
+	Beep(500, 100);
+	
+	
+	idinaXY(45,10);
+	cout<<"======Odaberite temu kviza  ======";
+	idinaXY(50,12);
+	cout<<"1-->  INSTRUKCIJE";
+	
+	idinaXY(50,13);
+	cout<<"2-->  SPORT";
+	
+		idinaXY(50,13);
+	cout<<"3-->  HISTORIJA";
+	
+		idinaXY(50,13);
+	cout<<"4-->  ZIVI SVIJET";
+	
+		idinaXY(50,13);
+	cout<<"5-->  4.tema"; //upisite
+	
+	idinaXY(50,14);
+	cout<<"6-->  Rezultati";  
+	idinaXY(42,16);
+	cout<<"Unesite vasu opciju : ";    
+	Beep(500, 100);
+	go:  
+	
+}
