@@ -1,14 +1,11 @@
-//
-// Created by medek on 15/01/2024.
-//
-
+#include "SmartPointer.h"
 #include "Quiz.h"
 #include <algorithm>
 #include <random>
 #include <fstream>
 #include <iomanip>
 
-Quiz::Quiz() : skor(0){
+Quiz::Quiz()  : skor(0){
    /* std::random_device rd;
     std::mt19937 g(rd());
     std::shuffle(pitanja.begin(),pitanja.end(),g);*/
@@ -29,7 +26,6 @@ void Quiz::loadPitanja(const std::string &filename) {
             std::getline(file,line);
             opcije.push_back(line);
         }
-
         std::getline(file,line);
         if (!line.empty()) {
             try {
@@ -51,6 +47,7 @@ void Quiz::loadPitanja(const std::string &filename) {
 
 
 void Quiz::start()  {
+    SmartPointer<int> skorPointer(std::make_shared<int> (skor));
     odabirOblasti();
     int brPitanja = 15;
     int trenutnoPitanje = 0;
@@ -62,13 +59,14 @@ void Quiz::start()  {
         std::cin >> odabir;
         if(pitanje.isTacno(odabir)){
             std::cout << "Tacno!\n";
-            skor++;
+               skor++;
         }else{
             std::cout << "Netacno, Tacan odgovor je: " << pitanje.tacanOdgovor  << ". " << pitanje.opcije[pitanje.tacanOdgovor - 1] << "\n";
 
         }
         std::cout << std::endl;
         trenutnoPitanje++;
+        int skorUpdate = *skorPointer.get();
     }
     std::cout << "Quizz zavrsen. Vas skor je: " << skor << " od " << brPitanja << std::endl;
 
@@ -128,17 +126,80 @@ void Quiz::pohraniSkor(const std::string &imeIgraca, std::string &prezimeIgraca)
             std::cout << "Skor igraca " << imeIgraca << " " << prezimeIgraca << " je pohranjen." << std::endl;
             return;
         }
+        storedTabela("Tabela.txt");
     }
     igraci.push_back(Igrac(imeIgraca, prezimeIgraca, skor));
     std::cout << "Igrac " << imeIgraca << " " << prezimeIgraca << " dodan u tabelu." << std::endl;
 }
 
 void Quiz::tabela() const {
+    std::vector<Igrac> sortedIgraci = igraci;
+    std::sort(sortedIgraci.begin(), sortedIgraci.end(), [](const Igrac& a, const Igrac& b) {
+        return a.brBodova > b.brBodova;
+    });
+
     std::cout << "Tabela igraca" << std::endl;
     std::cout << std::setw(15) << "Ime" << std::setw(15) << "Prezime" << std::setw(10) << "Bodovi" << std::endl;
+
+    std::ofstream tabelaFile("Tabela.txt");
+    if (!tabelaFile.is_open()){
+        std::cerr << "Error, greska prilikom otvaranja Tabela.txt za zapisivanje" << std::endl;
+        return;
+    }
+    tabelaFile << std::setw(15) << "Ime" << std::setw(15) << "Prezime" << std::setw(10) << "Bodovi" << std::endl;
     for (const auto& igrac : igraci) {
         std::cout << std::setw(15) << igrac.ime << std::setw(15) << igrac.prezime << std::setw(10) << igrac.brBodova << std::endl;
+        tabelaFile << std::setw(15) << igrac.ime << std::setw(15) << igrac.prezime << std::setw(10) << igrac.brBodova << std::endl;
     }
+    tabelaFile.close();
+}
+void Quiz::storedTabela(const std::string &filename) const {
+    std::ifstream tabelaFile(filename);
+    if (!tabelaFile.is_open()) {
+        std::cerr << "Greska prilikom otvaranja " << filename << "za iscitavanje." << std::endl;
+        return;
+    }
+    std::string line;
+    while (std::getline(tabelaFile, line)) {
+        std::cout << line << std::endl;
+    }
+    tabelaFile.close();
 }
 
+void Quiz::saveTable(const std::string& filename) const {
+    std::ofstream tabelaFile(filename);
+    if (!tabelaFile.is_open()) {
+        std::cerr << "Unable to open " << filename << " for writing." << std::endl;
+        return;
+    }
 
+
+    tabelaFile << std::setw(15) << "Ime" << std::setw(15) << "Prezime" << std::setw(10) << "Bodovi" << std::endl;
+
+
+    for (const auto& igrac : igraci) {
+        tabelaFile << std::setw(15) << igrac.ime << std::setw(15) << igrac.prezime << std::setw(10) << igrac.brBodova << std::endl;
+    }
+
+    tabelaFile.close();
+}
+
+void Quiz::loadTable(const std::string& filename) {
+    std::ifstream tabelaFile(filename);
+    if (!tabelaFile.is_open()) {
+        std::cerr << "Unable to open " << filename << " for reading." << std::endl;
+        return;
+    }
+
+
+    std::string header;
+    std::getline(tabelaFile, header);
+
+
+    Igrac igrac;
+    while (tabelaFile >> igrac.ime >> igrac.prezime >> igrac.brBodova) {
+        igraci.push_back(igrac);
+    }
+
+    tabelaFile.close();
+}

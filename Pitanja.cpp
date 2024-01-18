@@ -1,6 +1,3 @@
-//
-// Created by medek on 15/01/2024.
-//
 #include "Pitanja.h"
 
 Pitanja::Pitanja(std::string tekst, std::vector<std::string> opc, int tacno): pitanje(tekst),opcije (opc),tacanOdgovor(tacno) {}
